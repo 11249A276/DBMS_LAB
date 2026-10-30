@@ -1,0 +1,70 @@
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2      A NUMBER := 10;
+  3      B NUMBER := 20;
+  4      C NUMBER;
+  5  BEGIN
+  6      C := A + B;
+  7      DBMS_OUTPUT.PUT_LINE('Sum = ' || C);
+  8  END;
+  9  /
+Sum = 30                                                                        
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2      A NUMBER := 10;
+  3      B NUMBER := 0;
+  4      C NUMBER;
+  5  BEGIN
+  6      C := A / B;
+  7      DBMS_OUTPUT.PUT_LINE('Result = ' || C);
+  8  EXCEPTION
+  9      WHEN ZERO_DIVIDE THEN
+ 10          DBMS_OUTPUT.PUT_LINE('Error: Cannot divide by zero');
+ 11  END;
+ 12  /
+Error: Cannot divide by zero                                                    
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2      V_NAME VARCHAR2(30);
+  3  BEGIN
+  4      SELECT NAME
+  5      INTO V_NAME
+  6      FROM STUDENT
+  7      WHERE STUDENT_ID = 999;
+  8  
+  9      DBMS_OUTPUT.PUT_LINE('Student Name = ' || V_NAME);
+ 10  
+ 11  EXCEPTION
+ 12      WHEN NO_DATA_FOUND THEN
+ 13          DBMS_OUTPUT.PUT_LINE('Error: No student found');
+ 14  END;
+ 15  /
+Error: No student found                                                         
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2      -- Variable declarations
+  3      V_NUMBER NUMBER;
+  4  
+  5  BEGIN
+  6      -- Executable statements
+  7      V_NUMBER := 100;
+  8      DBMS_OUTPUT.PUT_LINE('Number = ' || V_NUMBER);
+  9  
+ 10  EXCEPTION
+ 11      -- Error handling
+ 12      WHEN OTHERS THEN
+ 13          DBMS_OUTPUT.PUT_LINE('An error occurred');
+ 14  
+ 15  END;
+ 16  /
+Number = 100                                                                    
+
+PL/SQL procedure successfully completed.
+
+SQL> spool off
