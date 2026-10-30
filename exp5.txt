@@ -1,0 +1,194 @@
+SQL> CREATE TABLE STUDENTS_DCL (
+  2      REG_NO NUMBER(5) PRIMARY KEY,
+  3      NAME VARCHAR2(50),
+  4      DEPARTMENT VARCHAR2(20),
+  5      MARKS NUMBER(3)
+  6  );
+
+Table created.
+
+SQL> INSERT INTO STUDENTS_DCL
+  2  VALUES (101, 'Arun', 'CSE', 85);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO STUDENTS_DCL
+  2  VALUES (102, 'Priya', 'ECE', 90);
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> GRANT SELECT ON STUDENTS_DCL TO STUDENT1;
+
+Grant succeeded.
+
+SQL> SELECT * FROM your_username.STUDENTS_DCL;
+SELECT * FROM your_username.STUDENTS_DCL
+                            *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> GRANT SELECT, INSERT, UPDATE
+  2  ON STUDENTS_DCL
+  3  TO STUDENT1;
+
+Grant succeeded.
+
+SQL> GRANT ALL
+  2  ON STUDENTS_DCL
+  3  TO STUDENT1;
+
+Grant succeeded.
+
+SQL> REVOKE UPDATE
+  2  ON STUDENTS_DCL
+  3  FROM STUDENT1;
+
+Revoke succeeded.
+
+SQL> INSERT INTO STUDENTS_DCL
+  2  VALUES (103, 'Kavin', 'CSE', 85);
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> SELECT * FROM STUDENTS_DCL;
+
+    REG_NO NAME                                                                 
+---------- --------------------------------------------------                   
+DEPARTMENT                MARKS                                                 
+-------------------- ----------                                                 
+       101 Arun                                                                 
+CSE                          85                                                 
+                                                                                
+       102 Priya                                                                
+ECE                          90                                                 
+                                                                                
+       103 Kavin                                                                
+CSE                          85                                                 
+                                                                                
+
+SQL> UPDATE STUDENTS_DCL
+  2  SET MARKS = 95
+  3  WHERE REG_NO = 101;
+
+1 row updated.
+
+SQL> 
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> 
+SQL> SELECT * FROM STUDENTS_DCL;
+
+    REG_NO NAME                                                                 
+---------- --------------------------------------------------                   
+DEPARTMENT                MARKS                                                 
+-------------------- ----------                                                 
+       101 Arun                                                                 
+CSE                          85                                                 
+                                                                                
+       102 Priya                                                                
+ECE                          90                                                 
+                                                                                
+       103 Kavin                                                                
+CSE                          85                                                 
+                                                                                
+
+SQL> INSERT INTO STUDENTS_DCL
+  2  VALUES (104, 'Ravi', 'IT', 80);
+
+1 row created.
+
+SQL> 
+SQL> SAVEPOINT SP1;
+
+Savepoint created.
+
+SQL> 
+SQL> INSERT INTO STUDENTS_DCL
+  2  VALUES (105, 'Meena', 'ECE', 92);
+
+1 row created.
+
+SQL> 
+SQL> ROLLBACK TO SP1;
+
+Rollback complete.
+
+SQL> 
+SQL> SELECT * FROM STUDENTS_DCL;
+
+    REG_NO NAME                                                                 
+---------- --------------------------------------------------                   
+DEPARTMENT                MARKS                                                 
+-------------------- ----------                                                 
+       101 Arun                                                                 
+CSE                          85                                                 
+                                                                                
+       102 Priya                                                                
+ECE                          90                                                 
+                                                                                
+       103 Kavin                                                                
+CSE                          85                                                 
+                                                                                
+
+    REG_NO NAME                                                                 
+---------- --------------------------------------------------                   
+DEPARTMENT                MARKS                                                 
+-------------------- ----------                                                 
+       104 Ravi                                                                 
+IT                           80                                                 
+                                                                                
+
+SQL> INSERT INTO STUDENTS_DCL
+  2  VALUES (106, 'Divya', 'CSE', 88);
+
+1 row created.
+
+SQL> 
+SQL> SAVEPOINT SP2;
+
+Savepoint created.
+
+SQL> 
+SQL> UPDATE STUDENTS_DCL
+  2  SET MARKS = 98
+  3  WHERE REG_NO = 106;
+
+1 row updated.
+
+SQL> 
+SQL> ROLLBACK TO SP2;
+
+Rollback complete.
+
+SQL> 
+SQL> SELECT * FROM STUDENTS_DCL
+  2  WHERE REG_NO = 106;
+
+    REG_NO NAME                                                                 
+---------- --------------------------------------------------                   
+DEPARTMENT                MARKS                                                 
+-------------------- ----------                                                 
+       106 Divya                                                                
+CSE                          88                                                 
+                                                                                
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> spool off

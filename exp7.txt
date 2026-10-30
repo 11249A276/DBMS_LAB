@@ -1,0 +1,509 @@
+SQL> -- UPPER()
+SQL> SELECT UPPER('oracle database') FROM dual;
+
+UPPER('ORACLEDA                                                                 
+---------------                                                                 
+ORACLE DATABASE                                                                 
+
+SQL> 
+SQL> -- LOWER()
+SQL> SELECT LOWER('ORACLE DATABASE') FROM dual;
+
+LOWER('ORACLEDA                                                                 
+---------------                                                                 
+oracle database                                                                 
+
+SQL> 
+SQL> -- INITCAP()
+SQL> SELECT INITCAP('oracle database management') FROM dual;
+
+INITCAP('ORACLEDATABASEMAN                                                      
+--------------------------                                                      
+Oracle Database Management                                                      
+
+SQL> 
+SQL> -- LENGTH()
+SQL> SELECT LENGTH('DATABASE') FROM dual;
+
+LENGTH('DATABASE')                                                              
+------------------                                                              
+                 8                                                              
+
+SQL> 
+SQL> -- SUBSTR()
+SQL> SELECT SUBSTR('DATABASE', 1, 4) FROM dual;
+
+SUBS                                                                            
+----                                                                            
+DATA                                                                            
+
+SQL> 
+SQL> -- INSTR()
+SQL> SELECT INSTR('DATABASE', 'A') FROM dual;
+
+INSTR('DATABASE','A')                                                           
+---------------------                                                           
+                    2                                                           
+
+SQL> 
+SQL> -- REPLACE()
+SQL> SELECT REPLACE('ORACLE DATABASE', 'DATABASE', 'DBMS') FROM dual;
+
+REPLACE('OR                                                                     
+-----------                                                                     
+ORACLE DBMS                                                                     
+
+SQL> 
+SQL> -- CONCAT()
+SQL> SELECT CONCAT('Oracle', ' Database') FROM dual;
+
+CONCAT('ORACLE'                                                                 
+---------------                                                                 
+Oracle Database                                                                 
+
+SQL> 
+SQL> -- CONCAT using || operator
+SQL> SELECT 'Oracle' || ' Database' FROM dual;
+
+'ORACLE'||'DATA                                                                 
+---------------                                                                 
+Oracle Database                                                                 
+
+SQL> 
+SQL> -- TRIM()
+SQL> SELECT TRIM(' Oracle ') FROM dual;
+
+TRIM('                                                                          
+------                                                                          
+Oracle                                                                          
+
+SQL> 
+SQL> -- LTRIM()
+SQL> SELECT LTRIM(' Oracle') FROM dual;
+
+LTRIM(                                                                          
+------                                                                          
+Oracle                                                                          
+
+SQL> 
+SQL> -- RTRIM()
+SQL> SELECT RTRIM('Oracle ') FROM dual;
+
+RTRIM(                                                                          
+------                                                                          
+Oracle                                                                          
+
+SQL> -- ROUND()
+SQL> SELECT ROUND(45.6789, 2) FROM dual;
+
+ROUND(45.6789,2)                                                                
+----------------                                                                
+           45.68                                                                
+
+SQL> 
+SQL> -- TRUNC()
+SQL> SELECT TRUNC(45.6789, 2) FROM dual;
+
+TRUNC(45.6789,2)                                                                
+----------------                                                                
+           45.67                                                                
+
+SQL> 
+SQL> -- CEIL()
+SQL> SELECT CEIL(45.2) FROM dual;
+
+CEIL(45.2)                                                                      
+----------                                                                      
+        46                                                                      
+
+SQL> 
+SQL> -- FLOOR()
+SQL> SELECT FLOOR(45.8) FROM dual;
+
+FLOOR(45.8)                                                                     
+-----------                                                                     
+         45                                                                     
+
+SQL> 
+SQL> -- MOD()
+SQL> SELECT MOD(10, 3) FROM dual;
+
+ MOD(10,3)                                                                      
+----------                                                                      
+         1                                                                      
+
+SQL> 
+SQL> -- ABS()
+SQL> SELECT ABS(-25) FROM dual;
+
+  ABS(-25)                                                                      
+----------                                                                      
+        25                                                                      
+
+SQL> 
+SQL> -- POWER()
+SQL> SELECT POWER(2, 3) FROM dual;
+
+POWER(2,3)                                                                      
+----------                                                                      
+         8                                                                      
+
+SQL> 
+SQL> -- SQRT()
+SQL> SELECT SQRT(25) FROM dual;
+
+  SQRT(25)                                                                      
+----------                                                                      
+         5                                                                      
+
+SQL> 
+SQL> -- SIGN()
+SQL> SELECT SIGN(-50) FROM dual;
+
+ SIGN(-50)                                                                      
+----------                                                                      
+        -1                                                                      
+
+SQL> -- SYSDATE
+SQL> SELECT SYSDATE FROM dual;
+
+SYSDATE                                                                         
+---------                                                                       
+30-OCT-26                                                                       
+
+SQL> 
+SQL> -- CURRENT_DATE
+SQL> SELECT CURRENT_DATE FROM dual;
+
+CURRENT_D                                                                       
+---------                                                                       
+30-OCT-26                                                                       
+
+SQL> 
+SQL> -- ADD_MONTHS()
+SQL> SELECT ADD_MONTHS(SYSDATE, 3) FROM dual;
+
+ADD_MONTH                                                                       
+---------                                                                       
+30-JAN-27                                                                       
+
+SQL> 
+SQL> -- MONTHS_BETWEEN()
+SQL> SELECT MONTHS_BETWEEN(
+  2  DATE '2026-12-01',
+  3  DATE '2026-09-01'
+  4  ) FROM dual;
+
+MONTHS_BETWEEN(DATE'2026-12-01',DATE'2026-09-01')                               
+-------------------------------------------------                               
+                                                3                               
+
+SQL> 
+SQL> -- LAST_DAY()
+SQL> SELECT LAST_DAY(SYSDATE) FROM dual;
+
+LAST_DAY(                                                                       
+---------                                                                       
+31-OCT-26                                                                       
+
+SQL> 
+SQL> -- NEXT_DAY()
+SQL> SELECT NEXT_DAY(SYSDATE, 'MONDAY') FROM dual;
+
+NEXT_DAY(                                                                       
+---------                                                                       
+02-NOV-26                                                                       
+
+SQL> 
+SQL> -- ROUND() with dates
+SQL> SELECT ROUND(SYSDATE, 'MONTH') FROM dual;
+
+ROUND(SYS                                                                       
+---------                                                                       
+01-NOV-26                                                                       
+
+SQL> 
+SQL> -- TRUNC() with dates
+SQL> SELECT TRUNC(SYSDATE, 'MONTH') FROM dual;
+
+TRUNC(SYS                                                                       
+---------                                                                       
+01-OCT-26                                                                       
+
+SQL> -- TO_CHAR() with number
+SQL> SELECT TO_CHAR(12345.67, '99,999.99') FROM dual;
+
+TO_CHAR(12                                                                      
+----------                                                                      
+ 12,345.67                                                                      
+
+SQL> 
+SQL> -- TO_CHAR() with date
+SQL> SELECT TO_CHAR(SYSDATE, 'DD-MM-YYYY') FROM dual;
+
+TO_CHAR(SY                                                                      
+----------                                                                      
+30-10-2026                                                                      
+
+SQL> 
+SQL> -- TO_DATE()
+SQL> SELECT TO_DATE('25-09-2026', 'DD-MM-YYYY') FROM dual;
+
+TO_DATE('                                                                       
+---------                                                                       
+25-SEP-26                                                                       
+
+SQL> 
+SQL> -- TO_NUMBER()
+SQL> SELECT TO_NUMBER('500') + 100 FROM dual;
+
+TO_NUMBER('500')+100                                                            
+--------------------                                                            
+                 600                                                            
+
+SQL> CREATE TABLE students (
+  2      id NUMBER(5) PRIMARY KEY,
+  3      name VARCHAR2(30),
+  4      marks NUMBER(5)
+  5  );INSERT INTO students VALUES (1, 'Arun', 80);
+);INSERT INTO students VALUES (1, 'Arun', 80)
+ *
+ERROR at line 5:
+ORA-00911: invalid character 
+
+
+SQL> 
+SQL> INSERT INTO students VALUES (2, 'Bala', 70);
+INSERT INTO students VALUES (2, 'Bala', 70)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A276.SYS_C0034600) violated 
+
+
+SQL> 
+SQL> INSERT INTO students VALUES (3, 'Devi', 90);
+INSERT INTO students VALUES (3, 'Devi', 90)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A276.SYS_C0034600) violated 
+
+
+SQL> 
+SQL> INSERT INTO students VALUES (4, 'Ravi', 60);
+INSERT INTO students VALUES (4, 'Ravi', 60)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A276.SYS_C0034600) violated 
+
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> -- COUNT()
+SQL> SELECT COUNT(*) FROM students;
+
+  COUNT(*)                                                                      
+----------                                                                      
+         8                                                                      
+
+SQL> 
+SQL> -- SUM()
+SQL> SELECT SUM(marks) FROM students;
+SELECT SUM(marks) FROM students
+           *
+ERROR at line 1:
+ORA-00904: "MARKS": invalid identifier 
+
+
+SQL> 
+SQL> -- AVG()
+SQL> SELECT AVG(marks) FROM students;
+SELECT AVG(marks) FROM students
+           *
+ERROR at line 1:
+ORA-00904: "MARKS": invalid identifier 
+
+
+SQL> 
+SQL> -- MAX()
+SQL> SELECT MAX(marks) FROM students;
+SELECT MAX(marks) FROM students
+           *
+ERROR at line 1:
+ORA-00904: "MARKS": invalid identifier 
+
+
+SQL> 
+SQL> -- MIN()
+SQL> SELECT MIN(marks) FROM students;
+SELECT MIN(marks) FROM students
+           *
+ERROR at line 1:
+ORA-00904: "MARKS": invalid identifier 
+
+
+SQL> INSERT INTO students (id, name, marks)
+  2  SELECT 1, 'Arun', 80 FROM dual
+  3  WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 1);
+WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 1)
+                                               *
+ERROR at line 3:
+ORA-00904: "ID": invalid identifier 
+
+
+SQL> 
+SQL> INSERT INTO students (id, name, marks)
+  2  SELECT 2, 'Bala', 70 FROM dual
+  3  WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 2);
+WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 2)
+                                               *
+ERROR at line 3:
+ORA-00904: "ID": invalid identifier 
+
+
+SQL> 
+SQL> INSERT INTO students (id, name, marks)
+  2  SELECT 3, 'Devi', 90 FROM dual
+  3  WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 3);
+WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 3)
+                                               *
+ERROR at line 3:
+ORA-00904: "ID": invalid identifier 
+
+
+SQL> 
+SQL> INSERT INTO students (id, name, marks)
+  2  SELECT 4, 'Ravi', 60 FROM dual
+  3  WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 4);
+WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 4)
+                                               *
+ERROR at line 3:
+ORA-00904: "ID": invalid identifier 
+
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM students;
+
+STUDENT_ID STUDENT_NAME                                          DEPT_ID        
+---------- -------------------------------------------------- ----------        
+         2 Bala                                                       70        
+         3 Devi                                                       90        
+         4 Ravi                                                       60        
+       101 Anu                                                         1        
+       102 Bindu                                                       2        
+       103 Chitra                                                      3        
+       104 Divya                                                       1        
+       105 Elan                                                        4        
+
+8 rows selected.
+
+SQL> -- COUNT
+SQL> SELECT COUNT(*) FROM students;
+
+  COUNT(*)                                                                      
+----------                                                                      
+         8                                                                      
+
+SQL> 
+SQL> -- SUM
+SQL> SELECT SUM(marks) FROM students;
+SELECT SUM(marks) FROM students
+           *
+ERROR at line 1:
+ORA-00904: "MARKS": invalid identifier 
+
+
+SQL> 
+SQL> -- AVG
+SQL> SELECT AVG(marks) FROM students;
+SELECT AVG(marks) FROM students
+           *
+ERROR at line 1:
+ORA-00904: "MARKS": invalid identifier 
+
+
+SQL> 
+SQL> -- MAX
+SQL> SELECT MAX(marks) FROM students;
+SELECT MAX(marks) FROM students
+           *
+ERROR at line 1:
+ORA-00904: "MARKS": invalid identifier 
+
+
+SQL> 
+SQL> -- MIN
+SQL> SELECT MIN(marks) FROM students;
+SELECT MIN(marks) FROM students
+           *
+ERROR at line 1:
+ORA-00904: "MARKS": invalid identifier 
+
+
+SQL> 
+SQL> INSERT INTO students (id, name, marks)
+  2  SELECT 1, 'Arun', 80 FROM dual
+  3  WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 1);
+WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 1)
+                                               *
+ERROR at line 3:
+ORA-00904: "ID": invalid identifier 
+
+
+SQL> 
+SQL> INSERT INTO students (id, name, marks)
+  2  SELECT 2, 'Bala', 70 FROM dual
+  3  WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 2);
+WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 2)
+                                               *
+ERROR at line 3:
+ORA-00904: "ID": invalid identifier 
+
+
+SQL> 
+SQL> INSERT INTO students (id, name, marks)
+  2  SELECT 3, 'Devi', 90 FROM dual
+  3  WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 3);
+WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 3)
+                                               *
+ERROR at line 3:
+ORA-00904: "ID": invalid identifier 
+
+
+SQL> 
+SQL> INSERT INTO students (id, name, marks)
+  2  SELECT 4, 'Ravi', 60 FROM dual
+  3  WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 4);
+WHERE NOT EXISTS (SELECT 1 FROM students WHERE id = 4)
+                                               *
+ERROR at line 3:
+ORA-00904: "ID": invalid identifier 
+
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM students;
+
+STUDENT_ID STUDENT_NAME                                          DEPT_ID        
+---------- -------------------------------------------------- ----------        
+         2 Bala                                                       70        
+         3 Devi                                                       90        
+         4 Ravi                                                       60        
+       101 Anu                                                         1        
+       102 Bindu                                                       2        
+       103 Chitra                                                      3        
+       104 Divya                                                       1        
+       105 Elan                                                        4        
+
+8 rows selected.
+
+SQL> spool off

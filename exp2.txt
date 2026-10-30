@@ -1,0 +1,186 @@
+SQL> INSERT INTO STUDENT_EXP1
+  2  (STUDENT_ID, NAME, EMAIL, AGE, CITY)
+  3  VALUES (206, 'Deepa', 'deepa@gmail.com', 20, 'Chennai');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> UPDATE STUDENT_EXP1
+  2  SET AGE = 21
+  3  WHERE STUDENT_ID = 206;
+
+1 row updated.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> DELETE FROM STUDENT_EXP1
+  2  WHERE STUDENT_ID = 204;
+
+1 row deleted.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> ALTER TABLE STUDENT_EXP1
+  2  ADD PHONE VARCHAR2(15);
+
+Table altered.
+
+SQL> ALTER TABLE STUDENT_EXP1
+  2  MODIFY (NAME VARCHAR2(100));
+
+Table altered.
+
+SQL> SELECT *
+  2  FROM STUDENT_EXP1
+  3  WHERE AGE > 19;
+
+STUDENT_ID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+EMAIL                                                     AGE                   
+-------------------------------------------------- ----------                   
+CITY                           PHONE                                            
+------------------------------ ---------------                                  
+       201                                                                      
+Rahul                                                                           
+rahul@gmail.com                                            20                   
+Chennai                                                                         
+                                                                                
+
+STUDENT_ID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+EMAIL                                                     AGE                   
+-------------------------------------------------- ----------                   
+CITY                           PHONE                                            
+------------------------------ ---------------                                  
+       203                                                                      
+Kavin                                                                           
+kavin@gmail.com                                            21                   
+Chennai                                                                         
+                                                                                
+
+STUDENT_ID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+EMAIL                                                     AGE                   
+-------------------------------------------------- ----------                   
+CITY                           PHONE                                            
+------------------------------ ---------------                                  
+       205                                                                      
+Vijay                                                                           
+vijay@gmail.com                                            22                   
+Madurai                                                                         
+                                                                                
+
+STUDENT_ID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+EMAIL                                                     AGE                   
+-------------------------------------------------- ----------                   
+CITY                           PHONE                                            
+------------------------------ ---------------                                  
+       206                                                                      
+Deepa                                                                           
+deepa@gmail.com                                            21                   
+Chennai                                                                         
+                                                                                
+
+SQL> SELECT *
+  2  FROM STUDENT_EXP1;
+
+STUDENT_ID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+EMAIL                                                     AGE                   
+-------------------------------------------------- ----------                   
+CITY                           PHONE                                            
+------------------------------ ---------------                                  
+       201                                                                      
+Rahul                                                                           
+rahul@gmail.com                                            20                   
+Chennai                                                                         
+                                                                                
+
+STUDENT_ID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+EMAIL                                                     AGE                   
+-------------------------------------------------- ----------                   
+CITY                           PHONE                                            
+------------------------------ ---------------                                  
+       202                                                                      
+Priya                                                                           
+priya@gmail.com                                            19                   
+Madurai                                                                         
+                                                                                
+
+STUDENT_ID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+EMAIL                                                     AGE                   
+-------------------------------------------------- ----------                   
+CITY                           PHONE                                            
+------------------------------ ---------------                                  
+       203                                                                      
+Kavin                                                                           
+kavin@gmail.com                                            21                   
+Chennai                                                                         
+                                                                                
+
+STUDENT_ID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+EMAIL                                                     AGE                   
+-------------------------------------------------- ----------                   
+CITY                           PHONE                                            
+------------------------------ ---------------                                  
+       205                                                                      
+Vijay                                                                           
+vijay@gmail.com                                            22                   
+Madurai                                                                         
+                                                                                
+
+STUDENT_ID                                                                      
+----------                                                                      
+NAME                                                                            
+--------------------------------------------------------------------------------
+EMAIL                                                     AGE                   
+-------------------------------------------------- ----------                   
+CITY                           PHONE                                            
+------------------------------ ---------------                                  
+       206                                                                      
+Deepa                                                                           
+deepa@gmail.com                                            21                   
+Chennai                                                                         
+                                                                                
+
+SQL> DESC STUDENT_EXP1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENT_ID                                NOT NULL NUMBER(5)
+ NAME                                               VARCHAR2(100)
+ EMAIL                                              VARCHAR2(50)
+ AGE                                                NUMBER(3)
+ CITY                                               VARCHAR2(30)
+ PHONE                                              VARCHAR2(15)
+
+SQL> spool off

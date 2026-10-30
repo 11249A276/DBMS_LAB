@@ -1,0 +1,348 @@
+SQL> CREATE TABLE department (
+  2      dept_id NUMBER(3) PRIMARY KEY,
+  3      dept_name VARCHAR2(30) NOT NULL
+  4  );
+CREATE TABLE department (
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> CREATE TABLE dept (
+  2      dept_id NUMBER(3) PRIMARY KEY,
+  3      dept_name VARCHAR2(30) NOT NULL
+  4  );
+CREATE TABLE dept (
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> CREATE TABLE dep (
+  2      dept_id NUMBER(3) PRIMARY KEY,
+  3      dept_name VARCHAR2(30) NOT NULL
+  4  );
+
+Table created.
+
+SQL> CREATE TABLE std (
+  2      roll_no NUMBER(5) PRIMARY KEY,
+  3      name VARCHAR2(30) NOT NULL,
+  4      age NUMBER(2),
+  5      marks NUMBER(5,2),
+  6      dept_id NUMBER(3),
+  7      FOREIGN KEY (dept_id) REFERENCES dep(dept_id)
+  8  );
+
+Table created.
+
+SQL> INSERT INTO dep VALUES (10, 'CSE');
+
+1 row created.
+
+SQL> INSERT INTO dep VALUES (20, 'IT');
+
+1 row created.
+
+SQL> INSERT INTO dep VALUES (30, 'ECE');
+
+1 row created.
+
+SQL> INSERT INTO dep VALUES (40, 'MECH');
+
+1 row created.
+
+SQL> INSERT INTO dep VALUES (50, 'CIVIL');
+
+1 row created.
+
+SQL> INSERT INTO std VALUES (101, 'Arun', 20, 85, 10);
+
+1 row created.
+
+SQL> INSERT INTO std VALUES (102, 'Priya', 19, 92, 10);
+
+1 row created.
+
+SQL> INSERT INTO std VALUES (103, 'Kumar', 21, 76, 20);
+
+1 row created.
+
+SQL> INSERT INTO std VALUES (104, 'Divya', 20, 88, 20);
+
+1 row created.
+
+SQL> INSERT INTO std VALUES (105, 'Ravi', 22, 65, 30);
+
+1 row created.
+
+SQL> INSERT INTO std VALUES (106, 'Anu', 19, 95, 30);
+
+1 row created.
+
+SQL> INSERT INTO std VALUES (107, 'Suresh', 21, 72, 10);
+
+1 row created.
+
+SQL> INSERT INTO std VALUES (108, 'Meena', 20, 81, 40);
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM std
+  2  WHERE dept_id IN (10, 20);
+
+   ROLL_NO NAME                                  AGE      MARKS    DEPT_ID      
+---------- ------------------------------ ---------- ---------- ----------      
+       101 Arun                                   20         85         10      
+       102 Priya                                  19         92         10      
+       103 Kumar                                  21         76         20      
+       104 Divya                                  20         88         20      
+       107 Suresh                                 21         72         10      
+
+SQL> 
+SQL> SELECT * FROM std
+  2  WHERE marks IN (65, 76, 85);
+
+   ROLL_NO NAME                                  AGE      MARKS    DEPT_ID      
+---------- ------------------------------ ---------- ---------- ----------      
+       101 Arun                                   20         85         10      
+       103 Kumar                                  21         76         20      
+       105 Ravi                                   22         65         30      
+
+SQL> 
+SQL> SELECT * FROM std
+  2  WHERE dept_id IN (
+  3      SELECT dept_id FROM dep
+  4      WHERE dept_name = 'CSE'
+  5  );
+
+   ROLL_NO NAME                                  AGE      MARKS    DEPT_ID      
+---------- ------------------------------ ---------- ---------- ----------      
+       101 Arun                                   20         85         10      
+       102 Priya                                  19         92         10      
+       107 Suresh                                 21         72         10      
+
+SQL> SELECT name, marks
+  2  FROM std
+  3  WHERE marks > ANY (
+  4      SELECT marks FROM std
+  5      WHERE dept_id = 10
+  6  );
+
+NAME                                MARKS                                       
+------------------------------ ----------                                       
+Anu                                    95                                       
+Priya                                  92                                       
+Divya                                  88                                       
+Arun                                   85                                       
+Meena                                  81                                       
+Kumar                                  76                                       
+
+6 rows selected.
+
+SQL> SELECT name, marks
+  2  FROM std
+  3  WHERE marks > ALL (
+  4      SELECT marks FROM std
+  5      WHERE dept_id = 10
+  6  );
+
+NAME                                MARKS                                       
+------------------------------ ----------                                       
+Anu                                    95                                       
+
+SQL> 
+SQL> SELECT name, marks
+  2  FROM std
+  3  WHERE marks < ALL (
+  4      SELECT marks FROM std
+  5      WHERE dept_id = 10
+  6  );
+
+NAME                                MARKS                                       
+------------------------------ ----------                                       
+Ravi                                   65                                       
+
+SQL> SELECT dept_name
+  2  FROM dep d
+  3  WHERE EXISTS (
+  4      SELECT 1 FROM std s
+  5      WHERE s.dept_id = d.dept_id
+  6  );
+
+DEPT_NAME                                                                       
+------------------------------                                                  
+CSE                                                                             
+IT                                                                              
+ECE                                                                             
+MECH                                                                            
+
+SQL> SELECT dept_name
+  2  FROM dep d
+  3  WHERE NOT EXISTS (
+  4      SELECT 1 FROM std s
+  5      WHERE s.dept_id = d.dept_id
+  6  );
+
+DEPT_NAME                                                                       
+------------------------------                                                  
+CIVIL                                                                           
+
+SQL> SELECT name FROM std
+  2  WHERE marks > 90
+  3  
+SQL> UNION
+SP2-0042: unknown command "UNION" - rest of line ignored.
+SQL> 
+SQL> SELECT name FROM std
+  2  WHERE age < 20;
+
+NAME                                                                            
+------------------------------                                                  
+Priya                                                                           
+Anu                                                                             
+
+SQL> SELECT name FROM std
+  2  WHERE marks > 80
+  3  
+SQL> UNION ALL
+SP2-0042: unknown command "UNION ALL" - rest of line ignored.
+SQL> 
+SQL> SELECT name FROM std
+  2  WHERE age < 21;
+
+NAME                                                                            
+------------------------------                                                  
+Arun                                                                            
+Priya                                                                           
+Divya                                                                           
+Anu                                                                             
+Meena                                                                           
+
+SQL> SELECT name FROM std
+  2  WHERE marks > 80
+  3  
+SQL> INTERSECT
+SP2-0042: unknown command "INTERSECT" - rest of line ignored.
+SQL> 
+SQL> SELECT name FROM std
+  2  WHERE age < 21;
+
+NAME                                                                            
+------------------------------                                                  
+Arun                                                                            
+Priya                                                                           
+Divya                                                                           
+Anu                                                                             
+Meena                                                                           
+
+SQL> SELECT dept_id, COUNT(*) AS total_students
+  2  FROM std
+  3  GROUP BY dept_id;
+
+   DEPT_ID TOTAL_STUDENTS                                                       
+---------- --------------                                                       
+        30              2                                                       
+        20              2                                                       
+        40              1                                                       
+        10              3                                                       
+
+SQL> SELECT dept_id, AVG(marks) AS average_marks
+  2  FROM std
+  3  GROUP BY dept_id;
+
+   DEPT_ID AVERAGE_MARKS                                                        
+---------- -------------                                                        
+        30            80                                                        
+        20            82                                                        
+        40            81                                                        
+        10            83                                                        
+
+SQL> SELECT dept_id, SUM(marks) AS total_marks
+  2  FROM std
+  3  GROUP BY dept_id;
+
+   DEPT_ID TOTAL_MARKS                                                          
+---------- -----------                                                          
+        30         160                                                          
+        20         164                                                          
+        40          81                                                          
+        10         249                                                          
+
+SQL> SELECT dept_id,
+  2         MAX(marks) AS highest_mark,
+  3         MIN(marks) AS lowest_mark
+  4  FROM std
+  5  GROUP BY dept_id;
+
+   DEPT_ID HIGHEST_MARK LOWEST_MARK                                             
+---------- ------------ -----------                                             
+        30           95          65                                             
+        20           88          76                                             
+        40           81          81                                             
+        10           92          72                                             
+
+SQL> SELECT d.dept_name,
+  2         COUNT(s.roll_no) AS total_students,
+  3         AVG(s.marks) AS average_marks
+  4  FROM dep d
+  5  JOIN std s
+  6  ON d.dept_id = s.dept_id
+  7  GROUP BY d.dept_name;
+
+DEPT_NAME                      TOTAL_STUDENTS AVERAGE_MARKS                     
+------------------------------ -------------- -------------                     
+IT                                          2            82                     
+CSE                                         3            83                     
+MECH                                        1            81                     
+ECE                                         2            80                     
+
+SQL> SELECT dept_id, COUNT(*) AS total_students
+  2  FROM std
+  3  GROUP BY dept_id
+  4  HAVING COUNT(*) > 2;
+
+   DEPT_ID TOTAL_STUDENTS                                                       
+---------- --------------                                                       
+        10              3                                                       
+
+SQL> SELECT dept_id, AVG(marks) AS average_marks
+  2  FROM std
+  3  GROUP BY dept_id
+  4  HAVING AVG(marks) > 80;
+
+   DEPT_ID AVERAGE_MARKS                                                        
+---------- -------------                                                        
+        20            82                                                        
+        40            81                                                        
+        10            83                                                        
+
+SQL> SELECT dept_id, MAX(marks) AS highest_mark
+  2  FROM std
+  3  GROUP BY dept_id
+  4  HAVING MAX(marks) > 90;
+
+   DEPT_ID HIGHEST_MARK                                                         
+---------- ------------                                                         
+        30           95                                                         
+        10           92                                                         
+
+SQL> SELECT dept_id, AVG(marks) AS average_marks
+  2  FROM std
+  3  WHERE marks >= 70
+  4  GROUP BY dept_id
+  5  HAVING AVG(marks) > 80;
+
+   DEPT_ID AVERAGE_MARKS                                                        
+---------- -------------                                                        
+        30            95                                                        
+        20            82                                                        
+        40            81                                                        
+        10            83                                                        
+
+SQL> spool off

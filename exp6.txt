@@ -1,0 +1,706 @@
+SQL> CREATE TABLE Departments (
+  2      dept_id NUMBER(3) PRIMARY KEY,
+  3      dept_name VARCHAR2(30)
+  4  );
+CREATE TABLE Departments (
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> 
+SQL> CREATE TABLE Students (
+  2      student_id NUMBER(5) PRIMARY KEY,
+  3      student_name VARCHAR2(30),
+  4      dept_id NUMBER(3),
+  5      FOREIGN KEY (dept_id) REFERENCES Departments(dept_id)
+  6  );
+CREATE TABLE Students (
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> 
+SQL> INSERT INTO Departments VALUES (1, 'CSE');
+
+1 row created.
+
+SQL> INSERT INTO Departments VALUES (2, 'ECE');
+
+1 row created.
+
+SQL> INSERT INTO Departments VALUES (3, 'IT');
+
+1 row created.
+
+SQL> INSERT INTO Departments VALUES (5, 'MECH');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Students VALUES (101, 'Anu', 1);
+INSERT INTO Students VALUES (101, 'Anu', 1)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A276.SYS_C0034600) violated 
+
+
+SQL> INSERT INTO Students VALUES (102, 'Bindu', 2);
+INSERT INTO Students VALUES (102, 'Bindu', 2)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A276.SYS_C0034600) violated 
+
+
+SQL> INSERT INTO Students VALUES (103, 'Chitra', 3);
+INSERT INTO Students VALUES (103, 'Chitra', 3)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A276.SYS_C0034600) violated 
+
+
+SQL> INSERT INTO Students VALUES (104, 'Divya', 1);
+INSERT INTO Students VALUES (104, 'Divya', 1)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A276.SYS_C0034600) violated 
+
+
+SQL> 
+SQL> -- Insert Elan with no matching department
+SQL> INSERT INTO Students VALUES (105, 'Elan', NULL);
+INSERT INTO Students VALUES (105, 'Elan', NULL)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A276.SYS_C0034600) violated 
+
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT s.student_id, s.student_name, d.dept_name
+  2  FROM Students s
+  3  INNER JOIN Departments d
+  4  ON s.dept_id = d.dept_id;
+
+STUDENT_ID STUDENT_NAME                                                         
+---------- --------------------------------------------------                   
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+       101 Anu                                                                  
+CSE                                                                             
+                                                                                
+       102 Bindu                                                                
+ECE                                                                             
+                                                                                
+       103 Chitra                                                               
+IT                                                                              
+                                                                                
+
+STUDENT_ID STUDENT_NAME                                                         
+---------- --------------------------------------------------                   
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+       104 Divya                                                                
+CSE                                                                             
+                                                                                
+
+SQL> SELECT s.student_id, s.student_name, d.dept_name
+  2  FROM Students s
+  3  LEFT JOIN Departments d
+  4  ON s.dept_id = d.dept_id;
+
+STUDENT_ID STUDENT_NAME                                                         
+---------- --------------------------------------------------                   
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+       101 Anu                                                                  
+CSE                                                                             
+                                                                                
+       102 Bindu                                                                
+ECE                                                                             
+                                                                                
+       103 Chitra                                                               
+IT                                                                              
+                                                                                
+
+STUDENT_ID STUDENT_NAME                                                         
+---------- --------------------------------------------------                   
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+       104 Divya                                                                
+CSE                                                                             
+                                                                                
+       105 Elan                                                                 
+                                                                                
+                                                                                
+
+SQL> SELECT s.student_id, s.student_name, d.dept_name
+  2  FROM Students s
+  3  RIGHT JOIN Departments d
+  4  ON s.dept_id = d.dept_id;
+
+STUDENT_ID STUDENT_NAME                                                         
+---------- --------------------------------------------------                   
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+       101 Anu                                                                  
+CSE                                                                             
+                                                                                
+       104 Divya                                                                
+CSE                                                                             
+                                                                                
+       102 Bindu                                                                
+ECE                                                                             
+                                                                                
+
+STUDENT_ID STUDENT_NAME                                                         
+---------- --------------------------------------------------                   
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+       103 Chitra                                                               
+IT                                                                              
+                                                                                
+                                                                                
+MECH                                                                            
+                                                                                
+
+SQL> SELECT s.student_id, s.student_name, d.dept_name
+  2  FROM Students s
+  3  FULL OUTER JOIN Departments d
+  4  ON s.dept_id = d.dept_id;
+
+STUDENT_ID STUDENT_NAME                                                         
+---------- --------------------------------------------------                   
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+       101 Anu                                                                  
+CSE                                                                             
+                                                                                
+       102 Bindu                                                                
+ECE                                                                             
+                                                                                
+       103 Chitra                                                               
+IT                                                                              
+                                                                                
+
+STUDENT_ID STUDENT_NAME                                                         
+---------- --------------------------------------------------                   
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+       104 Divya                                                                
+CSE                                                                             
+                                                                                
+       105 Elan                                                                 
+                                                                                
+                                                                                
+                                                                                
+MECH                                                                            
+                                                                                
+
+6 rows selected.
+
+SQL> SELECT s.student_name, d.dept_name
+  2  FROM Students s
+  3  CROSS JOIN Departments d;
+
+STUDENT_NAME                                                                    
+--------------------------------------------------                              
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+Anu                                                                             
+CSE                                                                             
+                                                                                
+Bindu                                                                           
+CSE                                                                             
+                                                                                
+Chitra                                                                          
+CSE                                                                             
+                                                                                
+
+STUDENT_NAME                                                                    
+--------------------------------------------------                              
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+Divya                                                                           
+CSE                                                                             
+                                                                                
+Elan                                                                            
+CSE                                                                             
+                                                                                
+Anu                                                                             
+ECE                                                                             
+                                                                                
+
+STUDENT_NAME                                                                    
+--------------------------------------------------                              
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+Bindu                                                                           
+ECE                                                                             
+                                                                                
+Chitra                                                                          
+ECE                                                                             
+                                                                                
+Divya                                                                           
+ECE                                                                             
+                                                                                
+
+STUDENT_NAME                                                                    
+--------------------------------------------------                              
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+Elan                                                                            
+ECE                                                                             
+                                                                                
+Anu                                                                             
+IT                                                                              
+                                                                                
+Bindu                                                                           
+IT                                                                              
+                                                                                
+
+STUDENT_NAME                                                                    
+--------------------------------------------------                              
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+Chitra                                                                          
+IT                                                                              
+                                                                                
+Divya                                                                           
+IT                                                                              
+                                                                                
+Elan                                                                            
+IT                                                                              
+                                                                                
+
+STUDENT_NAME                                                                    
+--------------------------------------------------                              
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+Anu                                                                             
+MECH                                                                            
+                                                                                
+Bindu                                                                           
+MECH                                                                            
+                                                                                
+Chitra                                                                          
+MECH                                                                            
+                                                                                
+
+STUDENT_NAME                                                                    
+--------------------------------------------------                              
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+Divya                                                                           
+MECH                                                                            
+                                                                                
+Elan                                                                            
+MECH                                                                            
+                                                                                
+
+20 rows selected.
+
+SQL> CREATE TABLE Employees (
+  2      emp_id NUMBER(3) PRIMARY KEY,
+  3      emp_name VARCHAR2(30),
+  4      manager_id NUMBER(3)
+  5  );
+
+Table created.
+
+SQL> 
+SQL> INSERT INTO Employees VALUES (1, 'Ravi', 3);
+
+1 row created.
+
+SQL> INSERT INTO Employees VALUES (2, 'Sahana', 3);
+
+1 row created.
+
+SQL> INSERT INTO Employees VALUES (3, 'Prakash', NULL);
+
+1 row created.
+
+SQL> 
+SQL> SELECT e.emp_name AS Employee,
+  2         m.emp_name AS Manager
+  3  FROM Employees e
+  4  LEFT JOIN Employees m
+  5  ON e.manager_id = m.emp_id;
+
+EMPLOYEE                       MANAGER                                          
+------------------------------ ------------------------------                   
+Ravi                           Prakash                                          
+Sahana                         Prakash                                          
+Prakash                                                                         
+
+SQL> -- Students in CSE
+SQL> SELECT s.student_id, s.student_name, d.dept_name
+  2  FROM Students s
+  3  INNER JOIN Departments d
+  4  ON s.dept_id = d.dept_id
+  5  WHERE d.dept_name = 'CSE';
+
+STUDENT_ID STUDENT_NAME                                                         
+---------- --------------------------------------------------                   
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+       101 Anu                                                                  
+CSE                                                                             
+                                                                                
+       104 Divya                                                                
+CSE                                                                             
+                                                                                
+
+SQL> 
+SQL> -- Students in IT
+SQL> SELECT s.student_name
+  2  FROM Students s
+  3  INNER JOIN Departments d
+  4  ON s.dept_id = d.dept_id
+  5  WHERE d.dept_name = 'IT';
+
+STUDENT_NAME                                                                    
+--------------------------------------------------                              
+Chitra                                                                          
+
+SQL> SELECT s.student_name, d.dept_name
+  2  FROM Students s
+  3  INNER JOIN Departments d
+  4  ON s.dept_id = d.dept_id
+  5  ORDER BY d.dept_name ASC;
+
+STUDENT_NAME                                                                    
+--------------------------------------------------                              
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+Anu                                                                             
+CSE                                                                             
+                                                                                
+Divya                                                                           
+CSE                                                                             
+                                                                                
+Bindu                                                                           
+ECE                                                                             
+                                                                                
+
+STUDENT_NAME                                                                    
+--------------------------------------------------                              
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+Chitra                                                                          
+IT                                                                              
+                                                                                
+
+SQL> SELECT d.dept_name,
+  2         COUNT(s.student_id) AS total_students
+  3  FROM Departments d
+  4  LEFT JOIN Students s
+  5  ON d.dept_id = s.dept_id
+  6  GROUP BY d.dept_id, d.dept_name
+  7  ORDER BY d.dept_id;
+
+DEPT_NAME                                          TOTAL_STUDENTS               
+-------------------------------------------------- --------------               
+CSE                                                             2               
+ECE                                                             1               
+IT                                                              1               
+MECH                                                            0               
+
+SQL> SELECT UPPER('oracle database') FROM dual;
+
+UPPER('ORACLEDA                                                                 
+---------------                                                                 
+ORACLE DATABASE                                                                 
+
+SQL> SELECT LOWER('ORACLE DATABASE') FROM dual;
+
+LOWER('ORACLEDA                                                                 
+---------------                                                                 
+oracle database                                                                 
+
+SQL> SELECT INITCAP('oracle database management') FROM dual;
+
+INITCAP('ORACLEDATABASEMAN                                                      
+--------------------------                                                      
+Oracle Database Management                                                      
+
+SQL> SELECT LENGTH('DATABASE') FROM dual;
+
+LENGTH('DATABASE')                                                              
+------------------                                                              
+                 8                                                              
+
+SQL> SELECT SUBSTR('DATABASE', 1, 4) FROM dual;
+
+SUBS                                                                            
+----                                                                            
+DATA                                                                            
+
+SQL> SELECT INSTR('DATABASE', 'A') FROM dual;
+
+INSTR('DATABASE','A')                                                           
+---------------------                                                           
+                    2                                                           
+
+SQL> SELECT REPLACE('ORACLE DATABASE', 'DATABASE', 'DBMS') FROM dual;
+
+REPLACE('OR                                                                     
+-----------                                                                     
+ORACLE DBMS                                                                     
+
+SQL> SELECT CONCAT('Oracle', ' Database') FROM dual;
+
+CONCAT('ORACLE'                                                                 
+---------------                                                                 
+Oracle Database                                                                 
+
+SQL> SELECT TRIM(' Oracle ') FROM dual;
+
+TRIM('                                                                          
+------                                                                          
+Oracle                                                                          
+
+SQL> SELECT LTRIM(' Oracle') FROM dual;
+
+LTRIM(                                                                          
+------                                                                          
+Oracle                                                                          
+
+SQL> SELECT RTRIM('Oracle ') FROM dual;
+
+RTRIM(                                                                          
+------                                                                          
+Oracle                                                                          
+
+SQL> SELECT ROUND(45.6789, 2) FROM dual;
+
+ROUND(45.6789,2)                                                                
+----------------                                                                
+           45.68                                                                
+
+SQL> SELECT TRUNC(45.6789, 2) FROM dual;
+
+TRUNC(45.6789,2)                                                                
+----------------                                                                
+           45.67                                                                
+
+SQL> SELECT CEIL(45.2) FROM dual;
+
+CEIL(45.2)                                                                      
+----------                                                                      
+        46                                                                      
+
+SQL> SELECT FLOOR(45.8) FROM dual;
+
+FLOOR(45.8)                                                                     
+-----------                                                                     
+         45                                                                     
+
+SQL> SELECT MOD(10, 3) FROM dual;
+
+ MOD(10,3)                                                                      
+----------                                                                      
+         1                                                                      
+
+SQL> SELECT ABS(-25) FROM dual;
+
+  ABS(-25)                                                                      
+----------                                                                      
+        25                                                                      
+
+SQL> SELECT POWER(2, 3) FROM dual;
+
+POWER(2,3)                                                                      
+----------                                                                      
+         8                                                                      
+
+SQL> SELECT SQRT(25) FROM dual;
+
+  SQRT(25)                                                                      
+----------                                                                      
+         5                                                                      
+
+SQL> SELECT SIGN(-50) FROM dual;
+
+ SIGN(-50)                                                                      
+----------                                                                      
+        -1                                                                      
+
+SQL> SELECT SYSDATE FROM dual;
+
+SYSDATE                                                                         
+---------                                                                       
+23-OCT-26                                                                       
+
+SQL> SELECT CURRENT_DATE FROM dual;
+
+CURRENT_D                                                                       
+---------                                                                       
+23-OCT-26                                                                       
+
+SQL> SELECT ADD_MONTHS(SYSDATE, 3) FROM dual;
+
+ADD_MONTH                                                                       
+---------                                                                       
+23-JAN-27                                                                       
+
+SQL> 
+SQL> SELECT MONTHS_BETWEEN(
+  2      DATE '2026-12-01',
+  3      DATE '2026-09-01'
+  4  ) FROM dual;
+
+MONTHS_BETWEEN(DATE'2026-12-01',DATE'2026-09-01')                               
+-------------------------------------------------                               
+                                                3                               
+
+SQL> 
+SQL> SELECT LAST_DAY(SYSDATE) FROM dual;
+
+LAST_DAY(                                                                       
+---------                                                                       
+31-OCT-26                                                                       
+
+SQL> SELECT NEXT_DAY(SYSDATE, 'MONDAY') FROM dual;
+
+NEXT_DAY(                                                                       
+---------                                                                       
+26-OCT-26                                                                       
+
+SQL> SELECT ROUND(SYSDATE, 'MONTH') FROM dual;
+
+ROUND(SYS                                                                       
+---------                                                                       
+01-NOV-26                                                                       
+
+SQL> SELECT TRUNC(SYSDATE, 'MONTH') FROM dual;
+
+TRUNC(SYS                                                                       
+---------                                                                       
+01-OCT-26                                                                       
+
+SQL> SELECT TO_CHAR(12345.67, '99,999.99') FROM dual;
+
+TO_CHAR(12                                                                      
+----------                                                                      
+ 12,345.67                                                                      
+
+SQL> 
+SQL> SELECT TO_CHAR(SYSDATE, 'DD-MM-YYYY') FROM dual;
+
+TO_CHAR(SY                                                                      
+----------                                                                      
+23-10-2026                                                                      
+
+SQL> 
+SQL> SELECT TO_DATE('25-09-2026', 'DD-MM-YYYY') FROM dual;
+
+TO_DATE('                                                                       
+---------                                                                       
+25-SEP-26                                                                       
+
+SQL> 
+SQL> SELECT TO_NUMBER('500') + 100 FROM dual;
+
+TO_NUMBER('500')+100                                                            
+--------------------                                                            
+                 600                                                            
+
+SQL> SELECT TO_CHAR(12345.67, '99,999.99') FROM dual;
+
+TO_CHAR(12                                                                      
+----------                                                                      
+ 12,345.67                                                                      
+
+SQL> 
+SQL> SELECT TO_CHAR(SYSDATE, 'DD-MM-YYYY') FROM dual;
+
+TO_CHAR(SY                                                                      
+----------                                                                      
+23-10-2026                                                                      
+
+SQL> 
+SQL> SELECT TO_DATE('25-09-2026', 'DD-MM-YYYY') FROM dual;
+
+TO_DATE('                                                                       
+---------                                                                       
+25-SEP-26                                                                       
+
+SQL> 
+SQL> SELECT TO_NUMBER('500') + 100 FROM dual;
+
+TO_NUMBER('500')+100                                                            
+--------------------                                                            
+                 600                                                            
+
+SQL> CREATE TABLE StudentMarks (
+  2      id NUMBER(3) PRIMARY KEY,
+  3      name VARCHAR2(30),
+  4      marks NUMBER(5)
+  5  );
+
+Table created.
+
+SQL> 
+SQL> INSERT INTO StudentMarks VALUES (1, 'Arun', 80);
+
+1 row created.
+
+SQL> INSERT INTO StudentMarks VALUES (2, 'Bala', 70);
+
+1 row created.
+
+SQL> INSERT INTO StudentMarks VALUES (3, 'Devi', 90);
+
+1 row created.
+
+SQL> INSERT INTO StudentMarks VALUES (4, 'Ravi', 60);
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> SELECT COUNT(*) FROM StudentMarks;
+
+  COUNT(*)                                                                      
+----------                                                                      
+         4                                                                      
+
+SQL> 
+SQL> SELECT SUM(marks) FROM StudentMarks;
+
+SUM(MARKS)                                                                      
+----------                                                                      
+       300                                                                      
+
+SQL> 
+SQL> SELECT AVG(marks) FROM StudentMarks;
+
+AVG(MARKS)                                                                      
+----------                                                                      
+        75                                                                      
+
+SQL> 
+SQL> SELECT MAX(marks) FROM StudentMarks;
+
+MAX(MARKS)                                                                      
+----------                                                                      
+        90                                                                      
+
+SQL> 
+SQL> SELECT MIN(marks) FROM StudentMarks;
+
+MIN(MARKS)                                                                      
+----------                                                                      
+        60                                                                      
+
+SQL> spool off

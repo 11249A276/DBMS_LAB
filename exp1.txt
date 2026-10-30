@@ -1,0 +1,145 @@
+SQL> CREATE TABLE STUDENT_EXP1 (
+  2      STUDENT_ID NUMBER(5) PRIMARY KEY,
+  3      NAME VARCHAR2(30),
+  4      EMAIL VARCHAR2(50),
+  5      AGE NUMBER(3),
+  6      CITY VARCHAR2(30)
+  7  );
+
+Table created.
+
+SQL> INSERT INTO STUDENT_EXP1
+  2  VALUES (201, 'Rahul', 'rahul@gmail.com', 20, 'Chennai');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_EXP1
+  2  VALUES (202, 'Priya', 'priya@gmail.com', 19, 'Madurai');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_EXP1
+  2  VALUES (203, 'Kavin', 'kavin@gmail.com', 21, 'Chennai');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_EXP1
+  2  VALUES (204, 'Anitha', 'anitha@gmail.com', 18, 'Trichy');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_EXP1
+  2  VALUES (205, 'Vijay', 'vijay@gmail.com', 22, 'Madurai');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> DESC STUDENT_EXP1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENT_ID                                NOT NULL NUMBER(5)
+ NAME                                               VARCHAR2(30)
+ EMAIL                                              VARCHAR2(50)
+ AGE                                                NUMBER(3)
+ CITY                                               VARCHAR2(30)
+
+SQL> SELECT *
+  2  FROM STUDENT_EXP1
+  3  WHERE CITY = 'Chennai';
+
+STUDENT_ID NAME                                                                 
+---------- ------------------------------                                       
+EMAIL                                                     AGE                   
+-------------------------------------------------- ----------                   
+CITY                                                                            
+------------------------------                                                  
+       201 Rahul                                                                
+rahul@gmail.com                                            20                   
+Chennai                                                                         
+                                                                                
+       203 Kavin                                                                
+kavin@gmail.com                                            21                   
+Chennai                                                                         
+
+STUDENT_ID NAME                                                                 
+---------- ------------------------------                                       
+EMAIL                                                     AGE                   
+-------------------------------------------------- ----------                   
+CITY                                                                            
+------------------------------                                                  
+                                                                                
+
+SQL> SELECT NAME, AGE
+  2  FROM STUDENT_EXP1;
+
+NAME                                  AGE                                       
+------------------------------ ----------                                       
+Rahul                                  20                                       
+Priya                                  19                                       
+Kavin                                  21                                       
+Anitha                                 18                                       
+Vijay                                  22                                       
+
+SQL> SELECT *
+  2  FROM STUDENT_EXP1
+  3  ORDER BY AGE DESC;
+
+STUDENT_ID NAME                                                                 
+---------- ------------------------------                                       
+EMAIL                                                     AGE                   
+-------------------------------------------------- ----------                   
+CITY                                                                            
+------------------------------                                                  
+       205 Vijay                                                                
+vijay@gmail.com                                            22                   
+Madurai                                                                         
+                                                                                
+       203 Kavin                                                                
+kavin@gmail.com                                            21                   
+Chennai                                                                         
+
+STUDENT_ID NAME                                                                 
+---------- ------------------------------                                       
+EMAIL                                                     AGE                   
+-------------------------------------------------- ----------                   
+CITY                                                                            
+------------------------------                                                  
+                                                                                
+       201 Rahul                                                                
+rahul@gmail.com                                            20                   
+Chennai                                                                         
+                                                                                
+       202 Priya                                                                
+priya@gmail.com                                            19                   
+
+STUDENT_ID NAME                                                                 
+---------- ------------------------------                                       
+EMAIL                                                     AGE                   
+-------------------------------------------------- ----------                   
+CITY                                                                            
+------------------------------                                                  
+Madurai                                                                         
+                                                                                
+       204 Anitha                                                               
+anitha@gmail.com                                           18                   
+Trichy                                                                          
+                                                                                
+
+SQL> SELECT DISTINCT CITY
+  2  FROM STUDENT_EXP1;
+
+CITY                                                                            
+------------------------------                                                  
+Trichy                                                                          
+Madurai                                                                         
+Chennai                                                                         
+
+SQL> spool off

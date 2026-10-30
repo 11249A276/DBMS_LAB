@@ -1,0 +1,405 @@
+SQL> CREATE TABLE Student (
+  2      Student_ID NUMBER(5) PRIMARY KEY,
+  3      Student_Name VARCHAR2(50) NOT NULL,
+  4      Department VARCHAR2(10) NOT NULL,
+  5      Semester NUMBER(2) CHECK (Semester BETWEEN 1 AND 8),
+  6      Marks NUMBER(3) CHECK (Marks BETWEEN 0 AND 100),
+  7      City VARCHAR2(30),
+  8      Email VARCHAR2(50) UNIQUE
+  9  );
+CREATE TABLE Student (
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> CREATE TABLE STUDENT_PRACTICE (
+  2      STUDENT_ID NUMBER(5) PRIMARY KEY,
+  3      STUDENT_NAME VARCHAR2(50) NOT NULL,
+  4      DEPARTMENT VARCHAR2(10) NOT NULL,
+  5      SEMESTER NUMBER(2) CHECK (SEMESTER BETWEEN 1 AND 8),
+  6      MARKS NUMBER(3) CHECK (MARKS BETWEEN 0 AND 100),
+  7      CITY VARCHAR2(30),
+  8      EMAIL VARCHAR2(50) UNIQUE
+  9  );
+
+Table created.
+
+SQL> INSERT INTO STUDENT_PRACTICE VALUES
+  2  (101, 'Arun', 'CSE', 4, 85, 'Chennai', 'arun@gmail.com');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_PRACTICE VALUES
+  2  (102, 'Priya', 'IT', 4, 78, 'Madurai', 'priya@gmail.com');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_PRACTICE VALUES
+  2  (103, 'Karthik', 'CSE', 4, 92, 'Coimbatore', 'karthik@gmail.com');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_PRACTICE VALUES
+  2  (104, 'Divya', 'ECE', 4, 74, 'Chennai', 'divya@gmail.com');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_PRACTICE VALUES
+  2  (105, 'Rahul', 'IT', 4, 88, 'Salem', 'rahul@gmail.com');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_PRACTICE VALUES
+  2  (106, 'Meena', 'CSE', 4, 69, 'Trichy', 'meena@gmail.com');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_PRACTICE VALUES
+  2  (107, 'Sanjay', 'ECE', 4, 81, 'Madurai', 'sanjay@gmail.com');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_PRACTICE VALUES
+  2  (108, 'Anitha', 'CSE', 4, 95, 'Chennai', 'anitha@gmail.com');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM STUDENT_PRACTICE;
+
+STUDENT_ID STUDENT_NAME                                       DEPARTMENT        
+---------- -------------------------------------------------- ----------        
+  SEMESTER      MARKS CITY                                                      
+---------- ---------- ------------------------------                            
+EMAIL                                                                           
+--------------------------------------------------                              
+       101 Arun                                               CSE               
+         4         85 Chennai                                                   
+arun@gmail.com                                                                  
+                                                                                
+       102 Priya                                              IT                
+         4         78 Madurai                                                   
+priya@gmail.com                                                                 
+
+STUDENT_ID STUDENT_NAME                                       DEPARTMENT        
+---------- -------------------------------------------------- ----------        
+  SEMESTER      MARKS CITY                                                      
+---------- ---------- ------------------------------                            
+EMAIL                                                                           
+--------------------------------------------------                              
+                                                                                
+       103 Karthik                                            CSE               
+         4         92 Coimbatore                                                
+karthik@gmail.com                                                               
+                                                                                
+       104 Divya                                              ECE               
+         4         74 Chennai                                                   
+
+STUDENT_ID STUDENT_NAME                                       DEPARTMENT        
+---------- -------------------------------------------------- ----------        
+  SEMESTER      MARKS CITY                                                      
+---------- ---------- ------------------------------                            
+EMAIL                                                                           
+--------------------------------------------------                              
+divya@gmail.com                                                                 
+                                                                                
+       105 Rahul                                              IT                
+         4         88 Salem                                                     
+rahul@gmail.com                                                                 
+                                                                                
+       106 Meena                                              CSE               
+
+STUDENT_ID STUDENT_NAME                                       DEPARTMENT        
+---------- -------------------------------------------------- ----------        
+  SEMESTER      MARKS CITY                                                      
+---------- ---------- ------------------------------                            
+EMAIL                                                                           
+--------------------------------------------------                              
+         4         69 Trichy                                                    
+meena@gmail.com                                                                 
+                                                                                
+       107 Sanjay                                             ECE               
+         4         81 Madurai                                                   
+sanjay@gmail.com                                                                
+                                                                                
+
+STUDENT_ID STUDENT_NAME                                       DEPARTMENT        
+---------- -------------------------------------------------- ----------        
+  SEMESTER      MARKS CITY                                                      
+---------- ---------- ------------------------------                            
+EMAIL                                                                           
+--------------------------------------------------                              
+       108 Anitha                                             CSE               
+         4         95 Chennai                                                   
+anitha@gmail.com                                                                
+                                                                                
+
+8 rows selected.
+
+SQL> INSERT INTO STUDENT_PRACTICE VALUES
+  2  (101, 'Ravi', 'CSE', 4, 80, 'Chennai', 'ravi@gmail.com');
+INSERT INTO STUDENT_PRACTICE VALUES
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A276.SYS_C0036905) violated 
+
+
+SQL> INSERT INTO STUDENT_PRACTICE VALUES
+  2  (109, NULL, 'CSE', 4, 80, 'Chennai', 'test@gmail.com');
+(109, NULL, 'CSE', 4, 80, 'Chennai', 'test@gmail.com')
+      *
+ERROR at line 2:
+ORA-01400: cannot insert NULL into ("A276"."STUDENT_PRACTICE"."STUDENT_NAME") 
+
+
+SQL> INSERT INTO STUDENT_PRACTICE VALUES
+  2  (110, 'Sita', 'IT', 4, 80, 'Chennai', 'arun@gmail.com');
+INSERT INTO STUDENT_PRACTICE VALUES
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A276.SYS_C0036906) violated 
+
+
+SQL> INSERT INTO STUDENT_PRACTICE VALUES
+  2  (111, 'Ramesh', 'CSE', 4, 105, 'Chennai', 'ramesh@gmail.com');
+INSERT INTO STUDENT_PRACTICE VALUES
+*
+ERROR at line 1:
+ORA-02290: check constraint (A276.SYS_C0036904) violated 
+
+
+SQL> INSERT INTO STUDENT_PRACTICE VALUES
+  2  (112, 'Geetha', 'ECE', 10, 80, 'Chennai', 'geetha@gmail.com');
+INSERT INTO STUDENT_PRACTICE VALUES
+*
+ERROR at line 1:
+ORA-02290: check constraint (A276.SYS_C0036903) violated 
+
+
+SQL> ALTER TABLE STUDENT_PRACTICE
+  2  ADD PHONE VARCHAR2(15);
+
+Table altered.
+
+SQL> 
+SQL> ALTER TABLE STUDENT_PRACTICE
+  2  ADD CONSTRAINT UQ_PRACTICE_PHONE UNIQUE (PHONE);
+
+Table altered.
+
+SQL> 
+SQL> ALTER TABLE STUDENT_PRACTICE
+  2  MODIFY (STUDENT_NAME VARCHAR2(100));
+
+Table altered.
+
+SQL> 
+SQL> ALTER TABLE STUDENT_PRACTICE
+  2  RENAME COLUMN CITY TO ADDRESS;
+
+Table altered.
+
+SQL> INSERT INTO STUDENT_PRACTICE
+  2  (STUDENT_ID, STUDENT_NAME, DEPARTMENT, SEMESTER,
+  3   MARKS, ADDRESS, EMAIL)
+  4  VALUES (109, 'Vijay', 'IT', 4, 82, 'Chennai', 'vijay@gmail.com');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_PRACTICE
+  2  (STUDENT_ID, STUDENT_NAME, DEPARTMENT, SEMESTER,
+  3   MARKS, ADDRESS, EMAIL)
+  4  VALUES (110, 'Sneha', 'CSE', 4, 89, 'Salem', 'sneha@gmail.com');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_PRACTICE
+  2  (STUDENT_ID, STUDENT_NAME, DEPARTMENT, SEMESTER,
+  3   MARKS, ADDRESS, EMAIL)
+  4  VALUES (111, 'Naveen', 'ECE', 4, 76, 'Trichy', 'naveen@gmail.com');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> UPDATE STUDENT_PRACTICE
+  2  SET MARKS = 90
+  3  WHERE STUDENT_ID = 101;
+
+1 row updated.
+
+SQL> 
+SQL> UPDATE STUDENT_PRACTICE
+  2  SET DEPARTMENT = 'CSE'
+  3  WHERE STUDENT_ID = 102;
+
+1 row updated.
+
+SQL> 
+SQL> UPDATE STUDENT_PRACTICE
+  2  SET MARKS = MARKS + 5
+  3  WHERE DEPARTMENT = 'CSE';
+
+6 rows updated.
+
+SQL> 
+SQL> UPDATE STUDENT_PRACTICE
+  2  SET ADDRESS = 'Bengaluru'
+  3  WHERE ADDRESS = 'Chennai';
+
+4 rows updated.
+
+SQL> 
+SQL> UPDATE STUDENT_PRACTICE
+  2  SET MARKS = 95
+  3  WHERE STUDENT_ID = 105;
+
+1 row updated.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> DELETE FROM STUDENT_PRACTICE
+  2  WHERE STUDENT_ID = 106;
+
+1 row deleted.
+
+SQL> 
+SQL> DELETE FROM STUDENT_PRACTICE
+  2  WHERE MARKS < 75;
+
+1 row deleted.
+
+SQL> 
+SQL> DELETE FROM STUDENT_PRACTICE
+  2  WHERE DEPARTMENT = 'ECE'
+  3  AND MARKS < 80;
+
+1 row deleted.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> ALTER TABLE STUDENT_PRACTICE
+  2  MODIFY (ADDRESS DEFAULT 'Chennai');
+
+Table altered.
+
+SQL> 
+SQL> ALTER TABLE STUDENT_PRACTICE
+  2  ADD CONSTRAINT CHK_PRACTICE_DEPT
+  3  CHECK (DEPARTMENT IN ('CSE', 'IT', 'ECE', 'EEE', 'MECH'));
+
+Table altered.
+
+SQL> 
+SQL> ALTER TABLE STUDENT_PRACTICE
+  2  ADD CONSTRAINT CHK_PRACTICE_MARKS
+  3  CHECK (MARKS BETWEEN 0 AND 100);
+
+Table altered.
+
+SQL> CREATE TABLE DEPARTMENT_PRACTICE (
+  2      DEPT_ID NUMBER(3) PRIMARY KEY,
+  3      DEPT_NAME VARCHAR2(30) UNIQUE NOT NULL,
+  4      HOD VARCHAR2(50) NOT NULL
+  5  );
+
+Table created.
+
+SQL> INSERT INTO DEPARTMENT_PRACTICE VALUES (1, 'CSE', 'Dr. Kumar');
+
+1 row created.
+
+SQL> INSERT INTO DEPARTMENT_PRACTICE VALUES (2, 'IT', 'Dr. Priya');
+
+1 row created.
+
+SQL> INSERT INTO DEPARTMENT_PRACTICE VALUES (3, 'ECE', 'Dr. Ravi');
+
+1 row created.
+
+SQL> INSERT INTO DEPARTMENT_PRACTICE VALUES (4, 'EEE', 'Dr. Meena');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> -- Duplicate primary key: expected error
+SQL> INSERT INTO DEPARTMENT_PRACTICE VALUES (1, 'MECH', 'Dr. Kumar');
+INSERT INTO DEPARTMENT_PRACTICE VALUES (1, 'MECH', 'Dr. Kumar')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A276.SYS_C0036912) violated 
+
+
+SQL> 
+SQL> -- Duplicate department name: expected error
+SQL> INSERT INTO DEPARTMENT_PRACTICE VALUES (5, 'CSE', 'Dr. Raj');
+INSERT INTO DEPARTMENT_PRACTICE VALUES (5, 'CSE', 'Dr. Raj')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A276.SYS_C0036913) violated 
+
+
+SQL> 
+SQL> -- Missing HOD: expected error
+SQL> INSERT INTO DEPARTMENT_PRACTICE (DEPT_ID, DEPT_NAME)
+  2  VALUES (6, 'MECH');
+INSERT INTO DEPARTMENT_PRACTICE (DEPT_ID, DEPT_NAME)
+*
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("A276"."DEPARTMENT_PRACTICE"."HOD") 
+
+
+SQL> ALTER TABLE STUDENT_PRACTICE
+  2  DROP CONSTRAINT UQ_PRACTICE_PHONE;
+
+Table altered.
+
+SQL> 
+SQL> ALTER TABLE STUDENT_PRACTICE
+  2  DROP COLUMN PHONE;
+
+Table altered.
+
+SQL> 
+SQL> TRUNCATE TABLE DEPARTMENT_PRACTICE;
+
+Table truncated.
+
+SQL> 
+SQL> SELECT * FROM DEPARTMENT_PRACTICE;
+
+no rows selected
+
+SQL> 
+SQL> DROP TABLE DEPARTMENT_PRACTICE;
+
+Table dropped.
+
+SQL> spool off

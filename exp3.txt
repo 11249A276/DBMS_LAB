@@ -1,0 +1,265 @@
+SQL> CREATE TABLE STUDENT_PK (
+  2      STUDENT_ID NUMBER(5) PRIMARY KEY,
+  3      NAME VARCHAR2(50)
+  4  );
+
+Table created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_PK VALUES (101, 'Arun');
+
+1 row created.
+
+SQL> 
+SQL> -- This gives an error because STUDENT_ID 101 already exists
+SQL> INSERT INTO STUDENT_PK VALUES (101, 'Priya');
+INSERT INTO STUDENT_PK VALUES (101, 'Priya')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A276.SYS_C0036872) violated 
+
+
+SQL> 
+SQL> SELECT * FROM STUDENT_PK;
+
+STUDENT_ID NAME                                                                 
+---------- --------------------------------------------------                   
+       101 Arun                                                                 
+
+SQL> CREATE TABLE STUDENT_NN (
+  2      STUDENT_ID NUMBER(5) PRIMARY KEY,
+  3      NAME VARCHAR2(50) NOT NULL
+  4  );
+
+Table created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_NN VALUES (101, 'Arun');
+
+1 row created.
+
+SQL> 
+SQL> -- This gives an error because NAME cannot be NULL
+SQL> INSERT INTO STUDENT_NN VALUES (102, NULL);
+INSERT INTO STUDENT_NN VALUES (102, NULL)
+                                    *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("A276"."STUDENT_NN"."NAME") 
+
+
+SQL> 
+SQL> SELECT * FROM STUDENT_NN;
+
+STUDENT_ID NAME                                                                 
+---------- --------------------------------------------------                   
+       101 Arun                                                                 
+
+SQL> CREATE TABLE STUDENT_UQ (
+  2      STUDENT_ID NUMBER(5) PRIMARY KEY,
+  3      NAME VARCHAR2(50),
+  4      EMAIL VARCHAR2(100) UNIQUE
+  5  );
+
+Table created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_UQ
+  2  VALUES (101, 'Arun', 'arun@gmail.com');
+
+1 row created.
+
+SQL> 
+SQL> -- This gives an error because the email already exists
+SQL> INSERT INTO STUDENT_UQ
+  2  VALUES (102, 'Priya', 'arun@gmail.com');
+INSERT INTO STUDENT_UQ
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A276.SYS_C0036877) violated 
+
+
+SQL> 
+SQL> SELECT * FROM STUDENT_UQ;
+
+STUDENT_ID NAME                                                                 
+---------- --------------------------------------------------                   
+EMAIL                                                                           
+--------------------------------------------------------------------------------
+       101 Arun                                                                 
+arun@gmail.com                                                                  
+                                                                                
+
+SQL> CREATE TABLE STUDENT_CHK (
+  2      STUDENT_ID NUMBER(5) PRIMARY KEY,
+  3      NAME VARCHAR2(50),
+  4      AGE NUMBER(3) CHECK (AGE >= 18)
+  5  );
+
+Table created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_CHK VALUES (101, 'Arun', 20);
+
+1 row created.
+
+SQL> 
+SQL> -- This gives an error because AGE is less than 18
+SQL> INSERT INTO STUDENT_CHK VALUES (102, 'Priya', 16);
+INSERT INTO STUDENT_CHK VALUES (102, 'Priya', 16)
+*
+ERROR at line 1:
+ORA-02290: check constraint (A276.SYS_C0036879) violated 
+
+
+SQL> 
+SQL> SELECT * FROM STUDENT_CHK;
+
+STUDENT_ID NAME                                                      AGE        
+---------- -------------------------------------------------- ----------        
+       101 Arun                                                       20        
+
+SQL> CREATE TABLE STUDENT_DEF (
+  2      STUDENT_ID NUMBER(5) PRIMARY KEY,
+  3      NAME VARCHAR2(50),
+  4      CITY VARCHAR2(30) DEFAULT 'Chennai'
+  5  );
+
+Table created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_DEF (STUDENT_ID, NAME)
+  2  VALUES (101, 'Arun');
+
+1 row created.
+
+SQL> 
+SQL> SELECT * FROM STUDENT_DEF;
+
+STUDENT_ID NAME                                                                 
+---------- --------------------------------------------------                   
+CITY                                                                            
+------------------------------                                                  
+       101 Arun                                                                 
+Chennai                                                                         
+                                                                                
+
+SQL> CREATE TABLE DEPARTMENT_FK (
+  2      DEPT_ID NUMBER(3) PRIMARY KEY,
+  3      DEPT_NAME VARCHAR2(30)
+  4  );
+
+Table created.
+
+SQL> INSERT INTO DEPARTMENT_FK VALUES (1, 'CSE');
+
+1 row created.
+
+SQL> INSERT INTO DEPARTMENT_FK VALUES (2, 'ECE');
+
+1 row created.
+
+SQL> INSERT INTO DEPARTMENT_FK VALUES (3, 'IT');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> CREATE TABLE STUDENT_FK (
+  2      STUDENT_ID NUMBER(5) PRIMARY KEY,
+  3      NAME VARCHAR2(50),
+  4      DEPT_ID NUMBER(3),
+  5      FOREIGN KEY (DEPT_ID)
+  6          REFERENCES DEPARTMENT_FK(DEPT_ID)
+  7  );
+
+Table created.
+
+SQL> INSERT INTO STUDENT_FK VALUES (101, 'Arun', 1);
+
+1 row created.
+
+SQL> 
+SQL> -- This gives an error because department 10 does not exist
+SQL> INSERT INTO STUDENT_FK VALUES (102, 'Priya', 10);
+INSERT INTO STUDENT_FK VALUES (102, 'Priya', 10)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (A276.SYS_C0036888) violated - parent key not 
+found 
+
+
+SQL> 
+SQL> SELECT * FROM STUDENT_FK;
+
+STUDENT_ID NAME                                                  DEPT_ID        
+---------- -------------------------------------------------- ----------        
+       101 Arun                                                        1        
+
+SQL> CREATE TABLE DEPARTMENT_ALL (
+  2      DEPT_ID NUMBER(3) PRIMARY KEY,
+  3      DEPT_NAME VARCHAR2(30)
+  4  );
+
+Table created.
+
+SQL> INSERT INTO DEPARTMENT_ALL VALUES (1, 'CSE');
+
+1 row created.
+
+SQL> INSERT INTO DEPARTMENT_ALL VALUES (2, 'ECE');
+
+1 row created.
+
+SQL> INSERT INTO DEPARTMENT_ALL VALUES (3, 'IT');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> CREATE TABLE STUDENT_ALL (
+  2      STUDENT_ID NUMBER(5) PRIMARY KEY,
+  3      NAME VARCHAR2(50) NOT NULL,
+  4      EMAIL VARCHAR2(100) UNIQUE,
+  5      AGE NUMBER(3) CHECK (AGE >= 18),
+  6      CITY VARCHAR2(30) DEFAULT 'Chennai',
+  7      DEPT_ID NUMBER(3),
+  8      FOREIGN KEY (DEPT_ID)
+  9          REFERENCES DEPARTMENT_ALL(DEPT_ID)
+ 10  );
+
+Table created.
+
+SQL> INSERT INTO STUDENT_ALL
+  2  VALUES (101, 'Arun', 'arun@gmail.com', 20, 'Madurai', 1);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO STUDENT_ALL
+  2  VALUES (102, 'Priya', 'priya@gmail.com', 19, 'Chennai', 2);
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> INSERT INTO STUDENT_ALL
+  2  (STUDENT_ID, NAME, EMAIL, AGE, DEPT_ID)
+  3  VALUES (103, 'Kavin', 'kavin@gmail.com', 21, 3);
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
